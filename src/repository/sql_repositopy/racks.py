@@ -10,7 +10,7 @@ class RacksRepository(BaseSQLRepository, RacksRepositoryInterface):
     model = RackORM
     schema = OutputRacksSchema
 
-    async def get_occupied_racks(self):
+    async def get_occupied_racks(self) -> list[OccupiedRacksSchema]:
         racks = []
         query = (
             select(
@@ -36,7 +36,7 @@ class RacksRepository(BaseSQLRepository, RacksRepositoryInterface):
             racks.append(OccupiedRacksSchema.model_validate(rack))
         return racks
 
-    async def get_rack_with_max_size(self):
+    async def get_rack_with_max_size(self) -> list[MaxRackSizeInRoom]:
         rooms = []
         query = (
             select(

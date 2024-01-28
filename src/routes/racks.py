@@ -30,8 +30,8 @@ async def get_all_rack(
 async def set_rack(rack_schema: InputRacksSchema,
                    racks_repository=Depends(get_racks_repository)
                    ):
-    rack_schema = await RacksService(racks_repository).set_obj_schema(rack_schema.__dict__)
-    return rack_schema
+    rack_id = await RacksService(racks_repository).set_obj_schema(rack_schema.__dict__)
+    return {"rack_id": rack_id}
 
 
 @racks_router.put('/update_rack')
@@ -53,11 +53,11 @@ async def delete_rack(rack_id: int,
 
 @racks_router.get('/occupied_racks')
 async def get_occupied_racks(racks_repository=Depends(get_racks_repository)):
-    racks = await RacksService(racks_repository).get_occupied_racks()
-    return racks
+    occupied_racks_schema = await RacksService(racks_repository).get_occupied_racks()
+    return occupied_racks_schema
 
 
 @racks_router.get('/get_rack_with_max_size')
 async def get_rack_with_max_size(racks_repository=Depends(get_racks_repository)):
-    racks = await RacksService(racks_repository).get_rack_with_max_size()
-    return racks
+    rack_with_max_size_in_room_schema = await RacksService(racks_repository).get_rack_with_max_size()
+    return rack_with_max_size_in_room_schema

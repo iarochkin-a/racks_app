@@ -10,7 +10,7 @@ class RoomsRepository(BaseSQLRepository, RoomsRepositoryInterface):
     model = RoomORM
     schema = OutputRoomsSchema
 
-    async def get_room_with_occupied_racks(self):
+    async def get_room_with_occupied_racks(self) -> list[RoomsWithOccupiedRackSchema]:
         rooms = []
         query = (
             select(

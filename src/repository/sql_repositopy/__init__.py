@@ -17,7 +17,7 @@ class BaseSQLRepository:
     def __init__(self, session):
         self.session: AsyncSession = session
 
-    async def set_obj(self, data) -> schema:
+    async def set_obj(self, data) -> int:
         query = insert(self.model).values(**data).returning(self.model.id)
         obj_row = await self.session.execute(query)
         if not obj_row:
@@ -36,14 +36,14 @@ class BaseSQLRepository:
         obj_model = obj_row.scalar_one()
         return self.schema.model_validate(obj_model)
 
-    async def get_all_obj(self) -> [schema]:
+    async def get_all_obj(self) -> list[schema]:
         query = select(self.model)
         obj_row = await self.session.execute(query)
         obj_scalars = obj_row.scalars().all()
         obj_schemas = [self.schema.model_validate(row) for row in obj_scalars]
         return obj_schemas
 
-    async def update_obj(self, obj_id: int, new_obj):
+    async def update_obj(self, obj_id: int, new_obj) -> int:
         query = update(self.model).values(new_obj).where(self.model.id == obj_id).returning(self.model.id)
         obj_row = await self.session.execute(query)
         if not obj_row:
@@ -52,7 +52,7 @@ class BaseSQLRepository:
         new_obj_id = obj_row.scalar_one()
         return new_obj_id
 
-    async def delete_obj(self, obj_id: int):
+    async def delete_obj(self, obj_id: int) -> int:
         query = delete(self.model).where(self.model.id == obj_id).returning(self.model.id)
         obj_row = await self.session.execute(query)
         if not obj_row:

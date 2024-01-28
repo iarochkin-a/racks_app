@@ -1,6 +1,10 @@
+import logging
+
+
 def print_name_of_def(func):
     def wrapper(self, *args):
-        print(f'Function {func.__name__} was called.')
+        logging.basicConfig(level=logging.INFO)
+        logging.info(f'Function {func.__name__} was called.')
         result = func(self, *args)
         return result
     return wrapper
