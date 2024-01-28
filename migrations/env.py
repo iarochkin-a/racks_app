@@ -11,7 +11,7 @@ from src.database_config import Base, Database_utils
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-async_url = Database_utils.get_async_url()
+async_url = Database_utils().get_async_url()
 config.set_main_option("sqlalchemy.url", async_url)
 
 # Interpret the config file for Python logging.

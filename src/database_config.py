@@ -1,23 +1,28 @@
-import os
-
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine, AsyncEngine, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Base(DeclarativeBase):
     pass
 
 
+class Database_settings(BaseSettings):
+    POSTGRES_DB: str
+    POSTGRES_USER: str
+    POSTGRES_HOST: str
+    POSTGRES_PORT: str
+    POSTGRES_PASSWORD: str
+
+    model_config = SettingsConfigDict(env_file=".env")
+
+
 class Database_utils:
+    def __init__(self):
+        self.settings = Database_settings()
 
-    @classmethod
-    def get_async_url(cls) -> str:
-        load_dotenv()
-        POSTGRES_DB = os.getenv('POSTGRES_DB')
-        POSTGRES_USER = os.getenv('POSTGRES_USER')
-        POSTGRES_HOST = os.getenv('POSTGRES_HOST')
-        POSTGRES_PORT = os.getenv('POSTGRES_PORT')
-        POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
-        return f'postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}'
-
+    def get_async_url(self) -> str:
+        print(
+            f"postgresql+asyncpg://{self.settings.POSTGRES_USER}:{self.settings.POSTGRES_PASSWORD}"
+            f"@{self.settings.POSTGRES_HOST}:{self.settings.POSTGRES_PORT}/{self.settings.POSTGRES_DB}")
+        return (f'postgresql+asyncpg://{self.settings.POSTGRES_USER}:{self.settings.POSTGRES_PASSWORD}'
+                f'@{self.settings.POSTGRES_HOST}:{self.settings.POSTGRES_PORT}/{self.settings.POSTGRES_DB}')
