@@ -9,19 +9,17 @@ racks_router = APIRouter(
 )
 
 
-@racks_router.get('/get_rack')
+@racks_router.get('/get_rack', response_model=OutputRacksSchema)
 async def get_rack(
         rack_id: int,
-        racks_repository=Depends(get_racks_repository)
-) -> OutputRacksSchema:
+        racks_repository=Depends(get_racks_repository)):
     rack_schema = await RacksService(racks_repository).get_obj_schema(rack_id)
     return rack_schema
 
 
-@racks_router.get('/get_all_rack')
+@racks_router.get('/get_all_rack', response_model=list[OutputRacksSchema])
 async def get_all_rack(
-        racks_repository=Depends(get_racks_repository)
-        ) -> list[OutputRacksSchema]:
+        racks_repository=Depends(get_racks_repository)):
     rack_schemas_list = await RacksService(racks_repository).get_all_obj_schema()
     return rack_schemas_list
 
@@ -46,15 +44,13 @@ async def delete_rack(rack_id: int,
     await RacksService(racks_repository).delete_obj_schema(rack_id)
 
 
-@racks_router.get('/occupied_racks')
-async def get_occupied_racks(racks_repository=Depends(get_racks_repository)
-                             ) -> list[OccupiedRacksSchema]:
+@racks_router.get('/occupied_racks', response_model=list[OccupiedRacksSchema])
+async def get_occupied_racks(racks_repository=Depends(get_racks_repository)):
     occupied_racks_schema = await RacksService(racks_repository).get_occupied_racks()
     return occupied_racks_schema
 
 
-@racks_router.get('/get_rack_with_max_size')
-async def get_rack_with_max_size(racks_repository=Depends(get_racks_repository)
-                                 ) -> list[MaxRackSizeInRoom]:
+@racks_router.get('/get_rack_with_max_size', response_model=list[MaxRackSizeInRoom])
+async def get_rack_with_max_size(racks_repository=Depends(get_racks_repository)):
     rack_with_max_size_in_room_schema = await RacksService(racks_repository).get_rack_with_max_size()
     return rack_with_max_size_in_room_schema

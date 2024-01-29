@@ -9,20 +9,19 @@ customers_router = APIRouter(
 )
 
 
-@customers_router.get('/get_customer')
+@customers_router.get('/get_customer', response_model=OutputCustomersSchema)
 async def get_customer(
         customer_id: int,
-        customers_repository=Depends(get_customers_repository)
-                        ) -> OutputCustomersSchema:
-    room_schema = await CustomersService(customers_repository).get_obj_schema(customer_id)
-    return room_schema
+        customers_repository=Depends(get_customers_repository)):
+    customer_schema = await CustomersService(customers_repository).get_obj_schema(customer_id)
+    return customer_schema
 
 
-@customers_router.get('/get_all_customer')
+@customers_router.get('/get_all_customer', response_model=list[OutputCustomersSchema])
 async def get_all_customer(customers_repository=Depends(get_customers_repository)
                            ) -> list[OutputCustomersSchema]:
-    customer_schema = await CustomersService(customers_repository).get_all_obj_schema()
-    return customer_schema
+    customers_schemas = await CustomersService(customers_repository).get_all_obj_schema()
+    return customers_schemas
 
 
 @customers_router.post('/set_customer')

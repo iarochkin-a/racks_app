@@ -9,18 +9,16 @@ rooms_router = APIRouter(
 )
 
 
-@rooms_router.get('/get_room')
+@rooms_router.get('/get_room', response_model=OutputRoomSchema)
 async def get_room(
         room_id: int,
-        rooms_repository=Depends(get_rooms_repository)
-        ) -> OutputRoomSchema:
+        rooms_repository=Depends(get_rooms_repository)):
     rooms_schema = await RoomsService(rooms_repository).get_obj_schema(room_id)
     return rooms_schema
 
 
-@rooms_router.get('/get_all_rooms')
-async def get_all_rooms(rooms_repository=Depends(get_rooms_repository)
-                        ) -> list[OutputRoomSchema]:
+@rooms_router.get('/get_all_rooms', response_model=list[OutputRoomSchema])
+async def get_all_rooms(rooms_repository=Depends(get_rooms_repository)):
     room_schemas = await RoomsService(rooms_repository).get_all_obj_schema()
     return room_schemas
 
@@ -47,8 +45,7 @@ async def delete_rack(room_id: int,
     await RoomsService(rooms_repository).delete_obj_schema(room_id)
 
 
-@rooms_router.get('/get_room_with_occupied_racks')
-async def get_room_with_occupied_racks(rooms_repository=Depends(get_rooms_repository)
-                                       ) -> RoomsWithOccupiedRackSchema:
+@rooms_router.get('/get_room_with_occupied_racks', response_model=list[RoomsWithOccupiedRackSchema])
+async def get_room_with_occupied_racks(rooms_repository=Depends(get_rooms_repository)):
     rooms_with_occupied_racks_schema = await RoomsService(rooms_repository).get_room_with_occupied_racks()
     return rooms_with_occupied_racks_schema

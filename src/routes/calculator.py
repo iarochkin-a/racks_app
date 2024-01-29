@@ -11,30 +11,29 @@ calculator_router = APIRouter(
 )
 
 
-@calculator_router.get('/sum/')
+@calculator_router.get('/sum/', response_model=OutputCalculatorSchema)
 async def sum(is_reverse: bool, num: int,  q: Annotated[list[int], Query()] = None
               ) -> OutputCalculatorSchema:
     result_schema = await CalculatorService(num, is_reverse).sum(q)
     return result_schema
 
 
-@calculator_router.get('/minus')
+@calculator_router.get('/minus', response_model=OutputCalculatorSchema)
 async def minus(is_reverse: bool, num: int,  q: Annotated[list[int], Query()] = None
                 ) -> OutputCalculatorSchema:
     result_schema = await CalculatorService(num, is_reverse).minus(q)
     return result_schema
 
 
-@calculator_router.get('/product')
+@calculator_router.get('/product', response_model=OutputCalculatorSchema)
 async def product(is_reverse: bool, num: int,  q: Annotated[list[int], Query()] = None
                   ) -> OutputCalculatorSchema:
     result_schema = await CalculatorService(num, is_reverse).product(q)
     return result_schema
 
 
-@calculator_router.get('/quotient')
-async def quotient(is_reverse: bool, num: int,  q: Annotated[list[int], Query()] = None
-                   ) -> OutputCalculatorSchema:
+@calculator_router.get('/quotient', response_model=OutputCalculatorSchema)
+async def quotient(is_reverse: bool, num: int,  q: Annotated[list[int], Query()] = None):
     try:
         result_schema = await CalculatorService(num, is_reverse).quotient(q)
         return result_schema
