@@ -1,5 +1,5 @@
 import logging
-
+from src.repository.schemas.calculator import OutputCalculatorSchema
 
 def print_name_of_def(func):
     def wrapper(self, *args):
@@ -42,7 +42,7 @@ class CalculatorService:
             'variables': variables,
             'result': res
         }
-        return result
+        return OutputCalculatorSchema.model_validate(result)
 
     @reverse_list
     @change_last_num
@@ -53,7 +53,7 @@ class CalculatorService:
             'variables': variables,
             'result': res
         }
-        return result
+        return OutputCalculatorSchema.model_validate(result)
 
     @reverse_list
     @change_last_num
@@ -66,7 +66,7 @@ class CalculatorService:
             'variables': variables,
             'result': res
         }
-        return result
+        return OutputCalculatorSchema.model_validate(result)
 
     @reverse_list
     @change_last_num
@@ -81,4 +81,4 @@ class CalculatorService:
             'variables': variables,
             'result': res
         }
-        return result
+        return OutputCalculatorSchema.model_validate(result)

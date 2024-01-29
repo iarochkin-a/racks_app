@@ -1,15 +1,6 @@
 from src.repository.schemas import BaseSchema
 
 
-class InputRoomsSchema(BaseSchema):
-    name: str
-
-
-class OutputRoomsSchema(InputRoomsSchema):
-    id: int
-    racks: list["OutputRacksSchema"]
-
-
 class InputCustomersSchema(BaseSchema):
     name: str
 
@@ -29,6 +20,15 @@ class InputRacksSchema(BaseSchema):
 
 class OutputRacksSchema(InputRacksSchema):
     id: int
+
+
+class InputRoomsSchema(BaseSchema):
+    name: str
+
+
+class OutputRoomSchema(InputRoomsSchema):
+    id: int
+    racks: list["OutputRacksSchema"]
 
 
 class RoomsWithOccupiedRackSchema(BaseSchema):

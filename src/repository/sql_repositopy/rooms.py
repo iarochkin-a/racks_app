@@ -3,12 +3,12 @@ from sqlalchemy import select, func
 from src.repository.sql_repositopy import BaseSQLRepository
 from src.service import RoomsRepositoryInterface
 from src.repository.sql_repositopy.models import RackORM, RoomORM
-from src.repository.schemas.rooms import OutputRoomsSchema, RoomsWithOccupiedRackSchema
+from src.repository.schemas.rooms import OutputRoomSchema, RoomsWithOccupiedRackSchema
 
 
 class RoomsRepository(BaseSQLRepository, RoomsRepositoryInterface):
     model = RoomORM
-    schema = OutputRoomsSchema
+    schema = OutputRoomSchema
 
     async def get_room_with_occupied_racks(self) -> list[RoomsWithOccupiedRackSchema]:
         rooms = []

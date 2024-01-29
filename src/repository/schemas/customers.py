@@ -10,15 +10,6 @@ class OutputRoomsSchema(InputRoomsSchema):
     racks: list["OutputRacksSchema"]
 
 
-class InputCustomersSchema(BaseSchema):
-    name: str
-
-
-class OutputCustomersSchema(InputCustomersSchema):
-    id: int
-    racks: list["OutputRacksSchema"]
-
-
 class InputRacksSchema(BaseSchema):
     name: str
     size: int
@@ -29,3 +20,12 @@ class InputRacksSchema(BaseSchema):
 
 class OutputRacksSchema(InputRacksSchema):
     id: int
+
+
+class InputCustomersSchema(BaseSchema):
+    name: str
+
+
+class OutputCustomersSchema(InputCustomersSchema):
+    id: int
+    racks: list["OutputRacksSchema"]

@@ -18,13 +18,9 @@ class BaseSQLRepository:
         self.session: AsyncSession = session
 
     async def set_obj(self, data) -> int:
-        query = insert(self.model).values(**data).returning(self.model.id)
-        obj_row = await self.session.execute(query)
-        if not obj_row:
-            raise Exception(f'Something going wrong. Model {self.model.__name__} didn`t insert to database')
+        query = insert(self.model).values(**data)
+        await self.session.execute(query)
         await self.session.commit()
-        obj_model = obj_row.scalar_one()
-        return obj_model
 
     async def get_obj(self, obj_id: int) -> schema:
         query = (select(self.model)
@@ -44,22 +40,14 @@ class BaseSQLRepository:
         return obj_schemas
 
     async def update_obj(self, obj_id: int, new_obj) -> int:
-        query = update(self.model).values(new_obj).where(self.model.id == obj_id).returning(self.model.id)
-        obj_row = await self.session.execute(query)
-        if not obj_row:
-            raise Exception(f'{self.model.__name__} with id {self.model.id} not found.')
+        query = update(self.model).values(new_obj).where(self.model.id == obj_id)
+        await self.session.execute(query)
         await self.session.commit()
-        new_obj_id = obj_row.scalar_one()
-        return new_obj_id
 
     async def delete_obj(self, obj_id: int) -> int:
-        query = delete(self.model).where(self.model.id == obj_id).returning(self.model.id)
-        obj_row = await self.session.execute(query)
-        if not obj_row:
-            raise Exception(f'{self.model.__name__} with id {self.model.id} not found.')
+        query = delete(self.model).where(self.model.id == obj_id)
+        await self.session.execute(query)
         await self.session.commit()
-        new_obj_id = obj_row.scalar_one()
-        return new_obj_id
 
 
 class Base(DeclarativeBase):
