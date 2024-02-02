@@ -4,7 +4,7 @@ from src.repository.schemas.racks import OutputRacksSchema, InputRacksSchema, Oc
 
 class RacksService:
 
-    def __init__(self, RacksRepository: RacksRepositoryInterface):
+    def __init__(self, racks_repository: RacksRepositoryInterface):
         self.racks_repository = racks_repository
 
     async def set_obj_schema(self, data) -> int:
