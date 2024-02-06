@@ -1,6 +1,7 @@
 import logging
 from src.repository.schemas.calculator import OutputCalculatorSchema
 
+
 def print_name_of_def(func):
     def wrapper(self, *args):
         logging.basicConfig(level=logging.INFO)
@@ -36,7 +37,7 @@ class CalculatorService:
     @reverse_list
     @change_last_num
     @print_name_of_def
-    async def sum(self, variables: list) -> int:
+    async def sum(self, variables: list) -> OutputCalculatorSchema:
         res = sum(variables)
         result = {
             'variables': variables,
@@ -47,7 +48,7 @@ class CalculatorService:
     @reverse_list
     @change_last_num
     @print_name_of_def
-    async def minus(self, variables: list) -> int:
+    async def minus(self, variables: list) -> OutputCalculatorSchema:
         res = variables[0] - sum(variables[1::])
         result = {
             'variables': variables,
@@ -58,7 +59,7 @@ class CalculatorService:
     @reverse_list
     @change_last_num
     @print_name_of_def
-    async def product(self, variables: list) -> int:
+    async def product(self, variables: list) -> OutputCalculatorSchema:
         res = 1
         for num in variables:
             res *= num
@@ -71,7 +72,7 @@ class CalculatorService:
     @reverse_list
     @change_last_num
     @print_name_of_def
-    async def quotient(self, variables: list) -> float:
+    async def quotient(self, variables: list) -> OutputCalculatorSchema:
         res = variables[0]
         for num in variables[1::]:
             if num == 0:

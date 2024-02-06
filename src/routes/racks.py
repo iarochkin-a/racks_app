@@ -4,6 +4,7 @@ from src.service.racks import RacksService
 from src.repository.schemas.racks import InputRacksSchema, OutputRacksSchema, OccupiedRacksSchema, MaxRackSizeInRoom
 from src.routes.dependencies import get_racks_repository
 
+
 racks_router = APIRouter(
     prefix='/racks'
 )

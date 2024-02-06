@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, FastAPI
 
 from src.service.customers import CustomersService
 from src.repository.schemas.customers import InputCustomersSchema, OutputCustomersSchema

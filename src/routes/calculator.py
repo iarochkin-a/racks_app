@@ -11,7 +11,7 @@ calculator_router = APIRouter(
 )
 
 
-@calculator_router.get('/sum/', response_model=OutputCalculatorSchema)
+@calculator_router.get('/sum', response_model=OutputCalculatorSchema)
 async def sum(is_reverse: bool, num: int,  q: Annotated[list[int], Query()] = None
               ) -> OutputCalculatorSchema:
     result_schema = await CalculatorService(num, is_reverse).sum(q)
