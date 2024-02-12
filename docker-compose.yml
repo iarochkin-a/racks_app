@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    container_name: dcim_app
+    ports:
+      - "5006:5051"
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+
+  db:
+    container_name: racks_db_container
+    image: postgres:latest
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - mynetwork
+
+
+networks:
+  mynetwork:
+    external: true
+    name: myglobalnetwork
+
